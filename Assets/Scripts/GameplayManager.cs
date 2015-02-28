@@ -28,4 +28,9 @@ public class GameplayManager : MonoBehaviour {
   void Update () {
 
   }
+
+  void TimerExpired() {
+    // TODO: Show game over.
+    Application.LoadLevel("mainmenu");
+  }
 }
