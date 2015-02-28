@@ -18,10 +18,12 @@ public class Options : MonoBehaviour {
 	public Slider slider;
 	public int switchTargets;
 
+	private AudioManager audioManager;
+
 	private bool moving;
 	// Use this for initialization
 	void Start () {
-
+		audioManager = AudioManager.Instance;
 	}
 
 	// Update is called once per frame
@@ -43,8 +45,8 @@ public class Options : MonoBehaviour {
 			if(Vector3.Distance(Camera.main.transform.position, destination2.transform.position) < 10.9f)
 			{
 				moving = false;
-			
-		}
+
+			}
 		}
 
 		if (moving && switchTargets == 2) {
@@ -53,8 +55,8 @@ public class Options : MonoBehaviour {
 			if(Vector3.Distance(Camera.main.transform.position, destination3.transform.position) < 10.9f)
 			{
 				moving = false;
-			
-		}
+
+			}
 		}
 
 		if (moving && switchTargets == 3) {
@@ -63,8 +65,8 @@ public class Options : MonoBehaviour {
 			if(Vector3.Distance(Camera.main.transform.position, destination4.transform.position) < 10.9f)
 			{
 				moving = false;
-			
-		}
+
+			}
 		}
 	}
 
@@ -74,18 +76,22 @@ public class Options : MonoBehaviour {
 
 	public void MainCounter() {
 		switchTargets = 0;
+		audioManager.Play("menu_back");
 	}
 
 	public void OptionsCounter() {
 		switchTargets = 1;
+		audioManager.Play("menu_away");
 	}
 
 	public void CreditsCounter(){
 		switchTargets = 2;
+		audioManager.Play("menu_away");
 	}
 
 	public void InstructionsCounter(){
 		switchTargets = 3;
+		audioManager.Play("menu_away");
 	}
 
 	public void AdjustVolume()
