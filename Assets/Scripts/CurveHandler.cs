@@ -4,7 +4,12 @@ using System.Collections.Generic;
 
 public class CurveHandler : MonoBehaviour {
 
-	public List<GameObject> curve;
+	public struct Segment {
+		public float speed;
+		public GameObject gameObject;
+	}
+
+	public List<Segment> curve;
 	public GameObject curveSegmentPrefab;
 	//public GameObject forkSegmentPrefab;
 
@@ -24,25 +29,26 @@ public class CurveHandler : MonoBehaviour {
 	public bool disableHalfwayMark = false;
 	public bool halfwayMark = false;
 
-	public int minAngle;
-	public int maxAngle;
-	
+	public int minAngle = 2;
+	public int maxAngle = 6;
+	public float minSpeed = 0.4f;
+	public float segmentReversalChance;
+
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
+		curve = new List<Segment>();
 		startPoint = transform.position;
 		endPoint = startPoint;
 		endSegment = startSegment;
 		startSegment = new Vector3 (1, 1, 0);
-		minAngle = 2;
-		maxAngle = 6;
 		numberOfSegments = 300;
 		angleStep = 3.0f;
 		FillCurve ();
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -63,16 +69,28 @@ public class CurveHandler : MonoBehaviour {
 				arc.transform.position = endPoint;
 				arcScript = arc.GetComponent<CurveSegment>();
 				arcScript.ActivateCurveSegment(endPoint, endSegment, angleStep);
-				curve.Add(arc);
+				var segment = new Segment();
+				segment.speed = minSpeed + (1f - minSpeed) * (1f - Mathf.Abs(angleStep / (maxAngle - minAngle)));
+				segment.gameObject = arc;
+				curve.Add(segment);
 				arc.transform.parent = this.transform;
-				
-				//Setup for next iteration
-				if(!(i == numberOfSegments-1))
-				{
-					angleStep = Random.Range (2,6);
-					if (i%2 == 0) 
-						angleStep = -angleStep ;
 
+				//Setup for next iteration
+				if(i != numberOfSegments-1)
+				{
+					var probabilities = new List<float>();
+					var range = maxAngle - minAngle;
+					// Generate probability list for selecting max angle step.
+					// e.g. [2,2,2,3,3,4], weighted toward wider angles (smaller steps)
+					for (var max = 0; max <= range; max++) {
+						for (var j = 0; j < range + 1 - max; j++) {
+							probabilities.Add(minAngle + max);
+						}
+					}
+					var randomMax = probabilities[Random.Range(0, probabilities.Count)];
+					angleStep = Random.Range ((float)minAngle, (float)randomMax);
+					if (i % 2 == 0 && Random.value < segmentReversalChance)
+						angleStep = -angleStep ;
 				}
 
 

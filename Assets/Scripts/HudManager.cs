@@ -10,12 +10,15 @@ public class HudManager : MonoBehaviour {
   public GameObject velocityHandle;
   public Text timerText;
   public Text velocityText;
+  public Text distanceText;
   public Slider velocitySlider;
 
   private float origTimerHandleX;
   private float origVelocityHandleX;
   private float offscreenTimerHandleX;
   private float offscreenVelocityHandleX;
+
+  [HideInInspector]
   public TimerController timerController;
   // private VelocitySliderController velocityController;
 
@@ -56,6 +59,10 @@ public class HudManager : MonoBehaviour {
 
   public void AddTime(float seconds) {
     timerController.AddTime(seconds);
+  }
+
+  public void SetDistance(int dist) {
+    distanceText.text = dist.ToString();
   }
 }
 

@@ -15,11 +15,15 @@ public class SpeedControl : MonoBehaviour {
     private KeyCombo[] LeftTurns;
     private KeyCombo[] RightTurns;
 
+    public GameplayManager gameplayManager;
+
     public float currentSpeed;
     public float accelRate;
     // Use this for initialization
     void Start ()
     {
+      gameplayManager = GameplayManager.Instance;
+
       LeftTurns = new KeyCombo[] {
         new KeyCombo("Horizontal", "Vertical", new string[] {"up", "left", "down"}, TURN_INPUTS),
         new KeyCombo("Horizontal", "Vertical", new string[] {"down", "right", "up"}, TURN_INPUTS)
@@ -30,26 +34,27 @@ public class SpeedControl : MonoBehaviour {
         new KeyCombo("Horizontal", "Vertical", new string[] {"down", "left", "up"}, TURN_INPUTS)
       };
 
-      foreach (KeyCombo turn in RightTurns.Concat(LeftTurns))
-      {
-          turn.HorizontalAxis = "Horizontal";
-          turn.VerticalAxis = "Vertical";
-      }
+      // foreach (KeyCombo turn in RightTurns.Concat(LeftTurns))
+      // {
+      //     turn.HorizontalAxis = "Horizontal";
+      //     turn.VerticalAxis = "Vertical";
+      // }
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if (RightTurns.Any(turn => turn.Check()) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
+        if (RightTurns.Any(turn => turn.Check()))
             currentSpeed -= accelRate;
-        }
-        if (LeftTurns.Any(turn => turn.Check()) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
+        if (LeftTurns.Any(turn => turn.Check()))
             currentSpeed += accelRate;
-        }
 
-        currentSpeed = Mathf.Clamp(currentSpeed, .5f, 1.5f);
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            currentSpeed -= accelRate * 0.5f;
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            currentSpeed += accelRate * 0.5f;
+
+        currentSpeed = Mathf.Clamp(currentSpeed, gameplayManager.MinSpeed, gameplayManager.MaxSpeed);
 
         Time.timeScale = currentSpeed;
         audioSourceOne.pitch = currentSpeed;
@@ -57,8 +62,8 @@ public class SpeedControl : MonoBehaviour {
 
     }
 
-    void FixedUpdate()
-    {
-        this.transform.position += new Vector3(0, .1f, 0);
-    }
+    // void FixedUpdate()
+    // {
+        // this.transform.position += new Vector3(0, .1f, 0);
+    // }
 }

@@ -32,7 +32,7 @@ public class TimerController : MonoBehaviour {
     if (remaining <= 0 && isRunning) {
       isRunning = false;
       remaining = 0;
-      gameplayManager.TimerExpired();
+      gameplayManager.GameOver();
     }
     updateText();
   }

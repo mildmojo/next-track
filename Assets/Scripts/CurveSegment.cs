@@ -16,23 +16,19 @@ public class CurveSegment : MonoBehaviour {
 	public List<Vector3> curveSegment;
 
 	//number of points in this curve
-	public int numberOfSegments;
+	private int numberOfSegments;
 	public Vector3 segment;
 	public float turnRate;
 	public LineRenderer lineRenderer;
 
 	public float maxSpeed;
-	public GameObject player;
-	public MoveAlongCurve playerScript;
 
 	public int minSegments;
 	public int maxSegments;
 	// Use this for initialization
 	void Start () {
-		player = GameObject.FindGameObjectWithTag ("Player");
-		playerScript = player.GetComponent<MoveAlongCurve> ();
-		minSegments = 20;
-		maxSegments = 50;
+		minSegments = 2000;
+		maxSegments = 5000;
 	}
 
 	public void ActivateCurveSegment (Vector3 start, Vector3 segment, float angleStep)
@@ -40,10 +36,10 @@ public class CurveSegment : MonoBehaviour {
 		FillCurveSegment (start, segment, angleStep);
 		//DrawCurveSegment ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	//Add points to the Curve Segment
@@ -62,7 +58,7 @@ public class CurveSegment : MonoBehaviour {
 		lineRenderer = gameObject.GetComponent<LineRenderer> ();
 		lineRenderer.SetVertexCount (numberOfSegments);
 		//curveSegment.Add (startPoint);
-		for (int i=0; i<numberOfSegments; i++) 
+		for (int i=0; i<numberOfSegments; i++)
 		{
 			curveSegment.Add (next);
 			lineRenderer.SetPosition (i, next);

@@ -25,13 +25,13 @@ public class TrackManager : MonoBehaviour {
 		trackBScript = trackB.GetComponent<CurveHandler>();
 		playerScript = player.GetComponent<MoveAlongCurve>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-			if (trackAScript.halfwayMark) {	
+			if (trackAScript.halfwayMark) {
 			RecreateTrack (trackB);
 			trackAScript.halfwayMark = false;
-		} 
+		}
 		else if (trackBScript.halfwayMark) {
 			RecreateTrack (trackA);
 			trackBScript.halfwayMark = false;
@@ -68,7 +68,7 @@ public class TrackManager : MonoBehaviour {
 				//{
 					for (int i =0 ; i<trackAScript.curve.Count; i++)
 					{
-						DestroyImmediate(trackAScript.curve[i]);
+						DestroyImmediate(trackAScript.curve[i].gameObject);
 						Debug.Log("Destroying A's curves");
 					}
 				trackAScript.curve.Clear ();
@@ -77,7 +77,7 @@ public class TrackManager : MonoBehaviour {
 				trackAScript.endPoint = trackBScript.nextTrackStart;
 				trackAScript.startSegment = trackBScript.nextTrackSegment;
 				trackAScript.angleStep = trackBScript.nextTrackAngle;
-				
+
 				//startPoint = transform.position;
 				//endPoint = startPoint;
 				//endSegment = startSegment;
@@ -88,7 +88,7 @@ public class TrackManager : MonoBehaviour {
 				trackACreated = true;
 			//}
 
-		} 
+		}
 		else if (track.name == "TrackB")
 		{
 			Debug.Log("recreating track B");
@@ -97,7 +97,7 @@ public class TrackManager : MonoBehaviour {
 			//{
 				for (int i =0 ; i<trackBScript.curve.Count; i++)
 				{
-					DestroyImmediate(trackBScript.curve[i]);
+					DestroyImmediate(trackBScript.curve[i].gameObject);
 				}
 				trackBScript.curve.Clear ();
 				trackB.SetActive(true);
@@ -107,7 +107,7 @@ public class TrackManager : MonoBehaviour {
 				trackBScript.endPoint = trackAScript.nextTrackStart;
 				trackBScript.startSegment = trackAScript.nextTrackSegment;
 				trackBScript.angleStep = trackAScript.nextTrackAngle;
-				
+
 				//startPoint = transform.position;
 				//endPoint = startPoint;
 				//endSegment = startSegment;

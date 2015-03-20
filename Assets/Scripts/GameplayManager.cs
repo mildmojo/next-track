@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour {
 
@@ -9,13 +10,20 @@ public class GameplayManager : MonoBehaviour {
   public GameObject Player;
   public GameObject particleExplosion;
   public GameObject ExplosionSoundObject;
+  public Image RedOverlay;
+  public float MinSpeed;
+  public float MaxSpeed;
 
   private AudioSource trainSound;
   private HudManager hudManager;
+  private CanvasGroup redOverlayGroup;
+  private float overspeedSeverity;
 
   void Awake() {
     Instance = this;
     trainSound = GetComponent<AudioSource>();
+    redOverlayGroup = RedOverlay.GetComponent<CanvasGroup>();
+    redOverlayGroup.alpha = 0f;
   }
 
   // Use this for initialization
@@ -34,9 +42,19 @@ public class GameplayManager : MonoBehaviour {
     if (Input.GetKeyDown(KeyCode.Escape)) {
       Application.LoadLevel("mainmenu");
     }
+
+    var minScale = 0.75f;
+    if (overspeedSeverity > 0f) {
+      var scale = 1 - overspeedSeverity * (1 - minScale);
+      RedOverlay.transform.localScale = Vector3.Lerp(RedOverlay.transform.localScale, Vector3.one * scale, 0.3f);
+      redOverlayGroup.alpha = Mathf.Lerp(redOverlayGroup.alpha, overspeedSeverity, 0.3f);
+    } else {
+      redOverlayGroup.alpha = 0f;
+      RedOverlay.transform.localScale = Vector3.one;
+    }
   }
 
-  public void TimerExpired() {
+  public void GameOver() {
     // TODO: Show game over.
     // Application.LoadLevel("mainmenu");
     var explosion = Instantiate(particleExplosion) as GameObject;
@@ -49,5 +67,10 @@ public class GameplayManager : MonoBehaviour {
     LeanTween.delayedCall(3f, () => {
       Application.LoadLevel("mainmenu");
     });
+  }
+
+  public void SetOverspeed(float severity) {
+    overspeedSeverity = severity;
+    Debug.Log("overspeed severity: " + severity);
   }
 }
