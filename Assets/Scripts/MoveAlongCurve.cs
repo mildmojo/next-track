@@ -3,19 +3,23 @@ using System.Collections;
 
 public class MoveAlongCurve : MonoBehaviour {
 
-	public GameObject curve;
+	public GameObject track;
+	public CurveHandler trackScript;
 	public CurveSegment segmentScript;
 	public int speed = 1;
-	private int segmentIndex = 0;
-	private int positionIndex = 0;
+	public int segmentIndex = 0;
+	public int positionIndex = 0;
+	public int accum = 4;
+	public int tempAccum;
 
 	// Use this for initialization
 	void Start () {
-		segmentScript = curve.GetComponent<CurveHandler> ().curve [segmentIndex].GetComponent<CurveSegment> ();
+		segmentScript = track.GetComponent<CurveHandler> ().curve [segmentIndex].GetComponent<CurveSegment> ();
+		trackScript = track.GetComponent<CurveHandler> ();
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		//if(Input.GetKeyDown(KeyCode.RightArrow))
 		if (true)
 		{
@@ -29,20 +33,45 @@ public class MoveAlongCurve : MonoBehaviour {
 	void MoveForward (int distnce)
 	{
 		if (positionIndex < segmentScript.curveSegment.Count) {
-		transform.position = segmentScript.curveSegment [positionIndex];
-		positionIndex += speed;
+			transform.position = segmentScript.curveSegment [positionIndex];
+      transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10.0f);
+			positionIndex += speed;
+			RealignTrainDirection(transform.position);
+
 		}
 		else {
 
 			segmentIndex++;
-			segmentScript = curve.GetComponent<CurveHandler> ().curve [segmentIndex].GetComponent<CurveSegment> ();
+			segmentScript = segmentScript = track.GetComponent<CurveHandler> ().curve [segmentIndex].GetComponent<CurveSegment> ();
 			positionIndex = 1;
+
+			if (segmentIndex == trackScript.curve.Count/2)
+				if(!trackScript.disableHalfwayMark)
+			{
+				trackScript.halfwayMark = true;
+				trackScript.disableHalfwayMark = true;
+				Debug.Log (trackScript.halfwayMark);
+			}
+
 		}
 	}
 
-	void RealignTrainDirection (int currentCurveIndex)
+	void RealignTrainDirection (Vector3 curr)
 	{
-		//transform.rotation = Quaternion.LookRotation(new Vector3(CurveHandler.curve[currentCurveIndex+1] - CurveHandler.curve[currentCurveIndex-1]));
+		transform.rotation = Quaternion.LookRotation(curr, Vector3.forward);
+	}
+
+	public void SwitchTracks (GameObject track, bool swtichFlag)
+	{
+		if (swtichFlag) {
+			this.track = track;
+
+			this.segmentIndex = 0;
+			this.positionIndex = 0;
+			this.segmentScript = track.GetComponent<CurveHandler> ().curve [segmentIndex].GetComponent<CurveSegment> ();
+			this.trackScript = track.GetComponent<CurveHandler> ();
+
+		}
 	}
 
 }

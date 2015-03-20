@@ -77,6 +77,11 @@ MonoBehaviour:
   endSegment: {x: 1, y: 1, z: 0}
   numberOfSegments: 0
   angleStep: 2
+  nextTrackStart: {x: 0, y: 0, z: 0}
+  nextTrackSegment: {x: 0, y: 0, z: 0}
+  nextTrackAngle: 0
+  disableHalfwayMark: 0
+  halfwayMark: 0
 --- !u!120 &12074314
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -109,7 +114,7 @@ LineRenderer:
     m_EndColor:
       serializedVersion: 2
       rgba: 4294967295
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

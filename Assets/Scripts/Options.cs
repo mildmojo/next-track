@@ -28,6 +28,9 @@ public class Options : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+Debug.Log("vert: " + Input.GetAxis("Vertical"));
+Debug.Log("horiz: " + Input.GetAxis("Horizontal"));
+
 
 		if (moving && switchTargets == 0) {
 			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, new Vector3(destination1.transform.position.x, destination1.transform.position.y, -10.0f), Time.deltaTime*2);

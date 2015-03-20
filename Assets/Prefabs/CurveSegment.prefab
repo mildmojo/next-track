@@ -44,7 +44,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8cb1f12571e6b0c448e8e61389bbc57c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -81,6 +81,11 @@ MonoBehaviour:
   segment: {x: 0, y: 0, z: 0}
   turnRate: 2
   lineRenderer: {fileID: 0}
+  maxSpeed: 0
+  player: {fileID: 0}
+  playerScript: {fileID: 0}
+  minSegments: 30
+  maxSegments: 60
 --- !u!120 &12080966
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -93,7 +98,7 @@ LineRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: e19d2009fab3cd446b3951a8cd9443ea, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

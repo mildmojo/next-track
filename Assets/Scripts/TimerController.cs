@@ -10,6 +10,8 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour {
 
+  public GameplayManager gameplayManager;
+
   private bool isRunning;
   private float duration;
   private float remaining;
@@ -19,17 +21,18 @@ public class TimerController : MonoBehaviour {
   // Use this for initialization
   void Start () {
     textComponent = GetComponent<Text>();
+    gameplayManager = GameplayManager.Instance;
   }
 
   // Update is called once per frame
   void Update () {
     if (isRunning) {
-      remaining -= Time.deltaTime;
+      remaining -= Time.unscaledDeltaTime;
     }
     if (remaining <= 0 && isRunning) {
       isRunning = false;
       remaining = 0;
-      BroadcastMessage("TimerExpired");
+      gameplayManager.TimerExpired();
     }
     updateText();
   }
