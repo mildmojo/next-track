@@ -71,6 +71,7 @@ public class GameplayManager : MonoBehaviour {
     Player.GetComponent<MoveAlongCurve>().speed = 0;
     Time.timeScale = 1;
     trainSound.Stop();
+    hudManager.timerController.StopTimer();
     ExplosionSoundObject.GetComponent<AudioSource>().Play();
     LeanTween.value(gameObject, severity => overspeedSeverity = severity, overspeedSeverity, 0f, 1f)
       .setDelay(2f);
