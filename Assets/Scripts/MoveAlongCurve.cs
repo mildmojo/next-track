@@ -86,12 +86,12 @@ public class MoveAlongCurve : MonoBehaviour {
 	}
 
 	void CheckSpeed() {
-		var pctOfMaxSpeed = Time.timeScale / (gameplayManager.MinSpeed + trackScript.curve[segmentIndex].speed);
+		var pctOfMaxSpeed = Time.timeScale / (gameplayManager.MinSpeed + trackScript.curve[segmentIndex].speedLimit);
 		var pctSegmentPos = (float) positionIndex / segmentScript.curveSegment.Count;
 		var pctWarning = 0.7f;
 		// If within 30% of top speed for segment, show vignette and add squeal up to 100%
 		// If overspeed and over 0.8 along segment, blow up
-Debug.Log("pctOfMaxSpeed " + pctOfMaxSpeed + ", pctSegmentPos " + pctSegmentPos);
+// Debug.Log("pctOfMaxSpeed " + pctOfMaxSpeed + ", pctSegmentPos " + pctSegmentPos);
 		if (pctOfMaxSpeed > pctWarning) {
 			var severity = Mathf.Clamp01((pctOfMaxSpeed - pctWarning) / (1 - pctWarning));
 			gameplayManager.SetOverspeed(severity);
@@ -99,9 +99,18 @@ Debug.Log("pctOfMaxSpeed " + pctOfMaxSpeed + ", pctSegmentPos " + pctSegmentPos)
 			gameplayManager.SetOverspeed(0f);
 		}
 
-		if (pctOfMaxSpeed > 1.0f && pctSegmentPos > 0.8f) {
+		// Overspeed and almost finished with a tight corner? Derail!
+		if (pctOfMaxSpeed > 1.0f && pctSegmentPos > 0.9f) {
 			gameplayManager.GameOver();
 		}
 	}
 
+	void OnTriggerEnter(Collider c) {
+		if (c.gameObject.CompareTag("Checkpoint")) {
+			var timeVal = c.gameObject.GetComponent<ValueContainer>().Get("add_time");
+			var addSeconds = float.Parse(timeVal,
+				System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+			gameplayManager.AddTime(addSeconds);
+		}
+	}
 }

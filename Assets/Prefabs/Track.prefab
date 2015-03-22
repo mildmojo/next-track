@@ -26,13 +26,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.51999998, y: 0, z: 0}
+  m_LocalPosition: {x: 1.51999998, y: 0, z: 64.2099991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2374314
-Renderer:
+MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -40,15 +40,19 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
 --- !u!33 &3374314
@@ -69,19 +73,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6819e28131ba646adc988bc207c106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curve: []
   curveSegmentPrefab: {fileID: 180966, guid: 398cfe833e4cdc74d8269ef82e809e3f, type: 2}
   startPoint: {x: 0, y: 0, z: 0}
   startSegment: {x: 1, y: 1, z: 0}
   endPoint: {x: 0, y: 0, z: 0}
   endSegment: {x: 1, y: 1, z: 0}
-  numberOfSegments: 0
+  numberOfSegments: 300
   angleStep: 2
   nextTrackStart: {x: 0, y: 0, z: 0}
   nextTrackSegment: {x: 0, y: 0, z: 0}
   nextTrackAngle: 0
   disableHalfwayMark: 0
   halfwayMark: 0
+  minAngle: 2
+  maxAngle: 5
+  minSpeed: .5
+  segmentReversalChance: .949999988
+  checkpointFrequency: 10
+  checkpointTimeAmount: 15
+  checkpointDiminishFactor: .949999988
 --- !u!120 &12074314
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -91,15 +101,19 @@ LineRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Positions:
@@ -126,4 +140,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 174314}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

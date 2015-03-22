@@ -18,6 +18,7 @@ public class GameplayManager : MonoBehaviour {
   private HudManager hudManager;
   private CanvasGroup redOverlayGroup;
   private float overspeedSeverity;
+  private bool isGameOver;
 
   void Awake() {
     Instance = this;
@@ -43,14 +44,21 @@ public class GameplayManager : MonoBehaviour {
       Application.LoadLevel("mainmenu");
     }
 
-    var minScale = 0.75f;
+    // Show red vision overlay if player's moving too fast.
+    var minRedScale = 0.75f;
     if (overspeedSeverity > 0f) {
-      var scale = 1 - overspeedSeverity * (1 - minScale);
-      RedOverlay.transform.localScale = Vector3.Lerp(RedOverlay.transform.localScale, Vector3.one * scale, 0.3f);
-      redOverlayGroup.alpha = Mathf.Lerp(redOverlayGroup.alpha, overspeedSeverity, 0.3f);
+      var scale = 1 - overspeedSeverity * (1 - minRedScale);
+      RedOverlay.transform.localScale = Vector3.Lerp(RedOverlay.transform.localScale, Vector3.one * scale, 1f);
+      redOverlayGroup.alpha = Mathf.Lerp(redOverlayGroup.alpha, overspeedSeverity, 1f);
     } else {
-      redOverlayGroup.alpha = 0f;
-      RedOverlay.transform.localScale = Vector3.one;
+      redOverlayGroup.alpha = Mathf.Lerp(redOverlayGroup.alpha, 0f, 1f);
+      RedOverlay.transform.localScale = Vector3.Lerp(RedOverlay.transform.localScale, Vector3.one, 1f);
+    }
+
+    if (isGameOver) {
+      if (Input.anyKeyDown) {
+        Application.LoadLevel("mainmenu");
+      }
     }
   }
 
@@ -64,13 +72,23 @@ public class GameplayManager : MonoBehaviour {
     Time.timeScale = 1;
     trainSound.Stop();
     ExplosionSoundObject.GetComponent<AudioSource>().Play();
-    LeanTween.delayedCall(3f, () => {
+    LeanTween.value(gameObject, severity => overspeedSeverity = severity, overspeedSeverity, 0f, 1f)
+      .setDelay(2f);
+    LeanTween.value(Camera.main.gameObject, val => Camera.main.orthographicSize = val, Camera.main.orthographicSize, 500f, 2f)
+      .setEase(LeanTweenType.easeInOutExpo)
+      .setDelay(2f);
+    LeanTween.delayedCall(2f, () => isGameOver = true);
+    LeanTween.delayedCall(10f, () => {
       Application.LoadLevel("mainmenu");
     });
   }
 
   public void SetOverspeed(float severity) {
     overspeedSeverity = severity;
-    Debug.Log("overspeed severity: " + severity);
+// Debug.Log("overspeed severity: " + severity);
+  }
+
+  public void AddTime(float seconds) {
+    hudManager.AddTime(seconds);
   }
 }

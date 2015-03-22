@@ -16,19 +16,15 @@ public class CurveSegment : MonoBehaviour {
 	public List<Vector3> curveSegment;
 
 	//number of points in this curve
-	private int numberOfSegments;
+	private int numberOfPoints;
 	public Vector3 segment;
 	public float turnRate;
 	public LineRenderer lineRenderer;
 
-	public float maxSpeed;
+	private int minPoints = 60;
+	private int maxPoints = 120;
 
-	public int minSegments;
-	public int maxSegments;
-	// Use this for initialization
 	void Start () {
-		minSegments = 2000;
-		maxSegments = 5000;
 	}
 
 	public void ActivateCurveSegment (Vector3 start, Vector3 segment, float angleStep)
@@ -45,41 +41,37 @@ public class CurveSegment : MonoBehaviour {
 	//Add points to the Curve Segment
 	void FillCurveSegment(Vector3 start, Vector3 segment, float angleStep)
 	{
-		numberOfSegments = Random.Range (minSegments, maxSegments);
-		Vector3 next;
+		numberOfPoints = Random.Range (minPoints, maxPoints);
+		Vector3 nextPoint;
 		this.segment = segment;
 		this.startSegment = segment;
 		this.startPoint = start;
 		this.turnRate = angleStep;
-		//curveSegment.Add (startPoint);
-		next = startPoint;
+		nextPoint = startPoint;
 
 		//Line renderer stuff
 		lineRenderer = gameObject.GetComponent<LineRenderer> ();
-		lineRenderer.SetVertexCount (numberOfSegments);
-		//curveSegment.Add (startPoint);
-		for (int i=0; i<numberOfSegments; i++)
+		lineRenderer.SetVertexCount (numberOfPoints);
+
+		for (int i=0; i<numberOfPoints; i++)
 		{
-			curveSegment.Add (next);
-			lineRenderer.SetPosition (i, next);
+			curveSegment.Add (nextPoint);
+			lineRenderer.SetPosition (i, nextPoint);
 			//Rotate Segment
 			segment = Quaternion.AngleAxis (turnRate, Vector3.forward) * segment;
-			next += segment;
-			//curveSegment.Add (next);
+			nextPoint += segment;
 		}
 
-		//curveSegment.Add (next);
-
 		//Find the end point and segment
-		endPoint = next;
+		endPoint = nextPoint;
 		endSegment = segment;
 	}
 
 //	void DrawCurveSegment()
 //	{
 //		lineRenderer = gameObject.GetComponent<LineRenderer> ();
-//		lineRenderer.SetVertexCount (numberOfSegments);
-//		for (int i=0; i <= numberOfSegments; i++) {
+//		lineRenderer.SetVertexCount (numberOfPoints);
+//		for (int i=0; i <= numberOfPoints; i++) {
 //			lineRenderer.SetPosition (i, curveSegment [i]);
 //			//Debug.Log(curve[i]);
 //		}

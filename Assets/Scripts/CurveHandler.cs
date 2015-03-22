@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CurveHandler : MonoBehaviour {
 
 	public struct Segment {
-		public float speed;
+		public float speedLimit;
 		public GameObject gameObject;
 	}
 
@@ -31,9 +31,11 @@ public class CurveHandler : MonoBehaviour {
 
 	public int minAngle = 2;
 	public int maxAngle = 6;
-	public float minSpeed = 0.4f;
+	public float minSpeed = 0.5f;
 	public float segmentReversalChance;
-
+	public int checkpointFrequency = 5;
+	public float checkpointTimeAmount = 10f;
+	public float checkpointDiminishFactor = 0.9f;
 
 	// Use this for initialization
 	void Awake () {
@@ -69,8 +71,21 @@ public class CurveHandler : MonoBehaviour {
 				arc.transform.position = endPoint;
 				arcScript = arc.GetComponent<CurveSegment>();
 				arcScript.ActivateCurveSegment(endPoint, endSegment, angleStep);
+				// Add a checkpoint after every `checkpointFrequency` segments.
+				if (i % checkpointFrequency == 0) {
+					var checkpoint = arc.transform.FindChild("Checkpoint").gameObject;
+					int checkpointNum = i / 5;
+					var checkpointAddTime = checkpointTimeAmount * Mathf.Pow(checkpointDiminishFactor, checkpointNum);
+					checkpoint.GetComponent<ValueContainer>().Set("add_time", checkpointAddTime.ToString());
+					// Don't activate the first checkpoint; it's the starting station.
+					if (i == 0) {
+						checkpoint.GetComponent<BoxCollider>().enabled = false;
+					}
+					checkpoint.SetActive(true);
+				}
 				var segment = new Segment();
-				segment.speed = minSpeed + (1f - minSpeed) * (1f - Mathf.Abs(angleStep / (maxAngle - minAngle)));
+				segment.speedLimit = minSpeed + (1f - minSpeed) * (1f - ((Mathf.Abs(angleStep) - minAngle) / (maxAngle - minAngle)));
+// Debug.Log("speedlimit: " + segment.speedLimit + ", minspeed: " + minSpeed + ", angle step: " + angleStep + ", angle range: " + (maxAngle - minAngle) + ", angle percentage: " + Mathf.Abs(angleStep / (maxAngle - minAngle)));
 				segment.gameObject = arc;
 				curve.Add(segment);
 				arc.transform.parent = this.transform;
