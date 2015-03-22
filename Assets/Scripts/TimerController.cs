@@ -58,6 +58,14 @@ public class TimerController : MonoBehaviour {
     remaining = duration;
   }
 
+  public void PulseTimer() {
+    LeanTween.scale(gameObject, Vector3.one * 1.05f, 0.2f)
+      .setEase(LeanTweenType.easeInQuad);
+    LeanTween.scale(gameObject, Vector3.one, 0.2f)
+      .setEase(LeanTweenType.easeOutQuad)
+      .setDelay(0.2f);
+  }
+
   void updateText() {
     float time = remaining < 0 ? 0 : remaining;
     textComponent.text = Mathf.Round(time).ToString();

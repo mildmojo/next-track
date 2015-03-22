@@ -59,6 +59,7 @@ public class HudManager : MonoBehaviour {
 
   public void AddTime(float seconds) {
     timerController.AddTime(seconds);
+    timerController.PulseTimer();
   }
 
   public void SetDistance(int dist) {
