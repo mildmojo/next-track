@@ -1369,24 +1369,17 @@ MonoBehaviour:
     m_MaxSize: 17
     m_Alignment: 1
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Your goal is to get the train to the
-
-    station before time runs out!
+  m_Text: 'Get the train as far as possible before time runs out!
 
 
     Controls:
 
-    Swirl the right joystick clockwise or
+    Swirl the right thumbstick clockwise or
 
-    counterclockwise to increase or decrease speed
-
-
-    Flick the left joystick left or right to switch tracks
-
-    and avoid danger '
+    counterclockwise to increase or decrease speed (or use up/down arrow keys)'
 --- !u!222 &847027903
 CanvasRenderer:
   m_ObjectHideFlags: 0
