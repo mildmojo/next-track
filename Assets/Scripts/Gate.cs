@@ -10,11 +10,11 @@ public class Gate : MonoBehaviour {
     public GateDirection previousDirection = GateDirection.LEFT;
 	// Use this for initialization
 	void Start () {
-	
+
 	}
-	
+
 	// Update is called once per frame
-	void Update () 
+	void Update ()
     {
 
         if (gateDirection == GateDirection.LEFT && previousDirection == GateDirection.RIGHT)
@@ -27,6 +27,6 @@ public class Gate : MonoBehaviour {
         }
 
         previousDirection = gateDirection;
-	
+
 	}
 }

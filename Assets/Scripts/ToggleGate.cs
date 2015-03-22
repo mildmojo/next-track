@@ -34,11 +34,11 @@ public class ToggleGate : MonoBehaviour {
 //                go.GetComponent<Gate>().gateDirection = Gate.GateDirection.RIGHT;
 //                go.transform.parent.localEulerAngles = new Vector3(0.0f, 0.0f, 330.0f);
 //            }
-            
+
             audioSourceTwo.volume = 1;
             audioSourceOne.volume = 0;
         }
-        
-	
+
+
 	}
 }
