@@ -1056,6 +1056,9 @@ MonoBehaviour:
   maxAngle: 7
   minSpeed: .400000006
   segmentReversalChance: .949999988
+  checkpointFrequency: 5
+  checkpointTimeAmount: 10
+  checkpointDiminishFactor: .899999976
 --- !u!23 &704765065
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1561,6 +1564,9 @@ MonoBehaviour:
   maxAngle: 7
   minSpeed: .400000006
   segmentReversalChance: .949999988
+  checkpointFrequency: 5
+  checkpointTimeAmount: 10
+  checkpointDiminishFactor: .899999976
 --- !u!23 &868889480
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2302,6 +2308,9 @@ MonoBehaviour:
   maxAngle: 7
   minSpeed: .400000006
   segmentReversalChance: .949999988
+  checkpointFrequency: 5
+  checkpointTimeAmount: 10
+  checkpointDiminishFactor: .899999976
 --- !u!23 &1407867157
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3788,6 +3797,9 @@ MonoBehaviour:
   maxAngle: 7
   minSpeed: .400000006
   segmentReversalChance: .949999988
+  checkpointFrequency: 5
+  checkpointTimeAmount: 10
+  checkpointDiminishFactor: .899999976
 --- !u!23 &2116770634
 MeshRenderer:
   m_ObjectHideFlags: 0
