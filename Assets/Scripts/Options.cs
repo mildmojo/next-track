@@ -30,7 +30,6 @@ public class Options : MonoBehaviour {
 	void Update () {
 		if (moving && switchTargets == 0) {
 			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, new Vector3(destination1.transform.position.x, destination1.transform.position.y, -10.0f), Time.deltaTime*2);
-			EventSystem.current.SetSelectedGameObject(mainSelected);
 			if(Vector3.Distance(Camera.main.transform.position, destination1.transform.position) < 10.9f)
 			{
 				moving = false;
@@ -40,7 +39,6 @@ public class Options : MonoBehaviour {
 
 		if (moving && switchTargets == 1) {
 			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, new Vector3(destination2.transform.position.x, destination2.transform.position.y, -10.0f), Time.deltaTime*2);
-			EventSystem.current.SetSelectedGameObject(optionsSelected);
 			if(Vector3.Distance(Camera.main.transform.position, destination2.transform.position) < 10.9f)
 			{
 				moving = false;
@@ -50,7 +48,6 @@ public class Options : MonoBehaviour {
 
 		if (moving && switchTargets == 2) {
 			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, new Vector3(destination3.transform.position.x, destination3.transform.position.y, -10.0f), Time.deltaTime*2);
-			EventSystem.current.SetSelectedGameObject(creditsSelected);
 			if(Vector3.Distance(Camera.main.transform.position, destination3.transform.position) < 10.9f)
 			{
 				moving = false;
@@ -60,7 +57,6 @@ public class Options : MonoBehaviour {
 
 		if (moving && switchTargets == 3) {
 			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, new Vector3(destination4.transform.position.x, destination4.transform.position.y, -10.0f), Time.deltaTime*2);
-			EventSystem.current.SetSelectedGameObject(instructionsSelected);
 			if(Vector3.Distance(Camera.main.transform.position, destination4.transform.position) < 10.9f)
 			{
 				moving = false;
@@ -75,21 +71,25 @@ public class Options : MonoBehaviour {
 
 	public void MainCounter() {
 		switchTargets = 0;
+		EventSystem.current.SetSelectedGameObject(mainSelected);
 		audioManager.Play("menu_back");
 	}
 
 	public void OptionsCounter() {
 		switchTargets = 1;
+		EventSystem.current.SetSelectedGameObject(optionsSelected);
 		audioManager.Play("menu_away");
 	}
 
 	public void CreditsCounter(){
 		switchTargets = 2;
+		EventSystem.current.SetSelectedGameObject(creditsSelected);
 		audioManager.Play("menu_away");
 	}
 
 	public void InstructionsCounter(){
 		switchTargets = 3;
+		EventSystem.current.SetSelectedGameObject(instructionsSelected);
 		audioManager.Play("menu_away");
 	}
 

@@ -21,8 +21,6 @@ public class SpriteThumper : MonoBehaviour {
   }
 
   void DoThump() {
-    Debug.Log("thump!");
-
     LeanTween
       .scale(gameObject, Vector3.one * 2f, 0.3f)
       .setOnComplete(() => {
@@ -36,9 +34,6 @@ public class SpriteThumper : MonoBehaviour {
       source.clip = thumpAudioClip;
       source.Play();
       Destroy(source, thumpAudioClip.length);
-      // var source = GetComponent<AudioSource>();
-      // source.clip = thumpAudioClip;
-      // source.Play();
     }
   }
 }

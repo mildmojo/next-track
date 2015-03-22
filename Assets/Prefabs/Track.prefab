@@ -90,7 +90,7 @@ MonoBehaviour:
   minSpeed: .5
   segmentReversalChance: .949999988
   checkpointFrequency: 10
-  checkpointTimeAmount: 15
+  checkpointTimeAmount: 18
   checkpointDiminishFactor: .949999988
 --- !u!120 &12074314
 LineRenderer:

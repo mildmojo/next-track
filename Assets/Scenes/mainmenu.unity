@@ -356,6 +356,7 @@ GameObject:
   - 4: {fileID: 279927080}
   - 114: {fileID: 279927081}
   - 114: {fileID: 279927079}
+  - 114: {fileID: 279927082}
   m_Layer: 0
   m_Name: Script Holder
   m_TagString: Untagged
@@ -410,6 +411,23 @@ MonoBehaviour:
   instructionsSelected: {fileID: 2055742065}
   slider: {fileID: 1627046933}
   switchTargets: 0
+--- !u!114 &279927082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 279927078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logDebugInfo: 0
+  invertYAxis: 0
+  enableXInput: 0
+  useFixedUpdate: 0
+  dontDestroyOnLoad: 0
+  customProfiles: []
 --- !u!1 &373256127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,6 +1415,7 @@ GameObject:
   - 114: {fileID: 855630377}
   - 114: {fileID: 855630376}
   - 114: {fileID: 855630375}
+  - 114: {fileID: 855630379}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1422,7 +1441,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 855630374}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -1459,6 +1478,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &855630379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 855630374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27479805f98187b4780afec5bf8cf5a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submitButton: 11
+  cancelButton: 12
+  analogMoveThreshold: .5
 --- !u!1 &868889476
 GameObject:
   m_ObjectHideFlags: 0

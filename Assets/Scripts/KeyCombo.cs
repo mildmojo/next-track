@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InControl;
 
 public class KeyCombo
 {
@@ -11,7 +12,7 @@ public class KeyCombo
 	public string[] buttons;
 	public string[] buttonWhitelist;
 	private int currentIndex = 0; //moves along the array as buttons are pressed
-	
+
 	public float allowedTimeBetweenButtons = 0.3f; //tweak as needed
 	private float timeLastButtonPressed;
 
@@ -25,7 +26,7 @@ public class KeyCombo
 		HorizontalAxis = axisX;
 		VerticalAxis = axisY;
 	}
-	
+
 	//usage: call this once a frame. when the combo has been completed, it will return true
 	public bool Check()
 	{
@@ -57,10 +58,14 @@ public class KeyCombo
 	private List<string> GetButtonsDown() {
 		List<string> buttonsDown = new List<string>();
 
-        if (Input.GetAxisRaw(VerticalAxis) < -0.8) buttonsDown.Add("down");
-		if (Input.GetAxisRaw(VerticalAxis) >  0.8) buttonsDown.Add("up");
-		if (Input.GetAxisRaw(HorizontalAxis) > -0.8) buttonsDown.Add("left");
-		if (Input.GetAxisRaw(HorizontalAxis) <  0.8) buttonsDown.Add("right");
+		var inputDevice = InputManager.ActiveDevice;
+		var vAxis = inputDevice.GetControlByName(VerticalAxis).Value;
+		var hAxis = inputDevice.GetControlByName(HorizontalAxis).Value;
+
+		if (vAxis < -0.8) buttonsDown.Add("down");
+		if (vAxis >  0.8) buttonsDown.Add("up");
+		if (hAxis > -0.8) buttonsDown.Add("left");
+		if (hAxis <  0.8) buttonsDown.Add("right");
 
 		foreach (string button in buttons) {
 			if (Input.GetKey(button)) buttonsDown.Add(button);

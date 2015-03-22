@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using InControl;
 
 public class GameplayManager : MonoBehaviour {
 
@@ -56,7 +57,8 @@ public class GameplayManager : MonoBehaviour {
     }
 
     if (isGameOver) {
-      if (Input.anyKeyDown) {
+      if (Input.anyKeyDown || InputManager.ActiveDevice.AnyButton.WasPressed) {
+        LeanTween.cancelAll(false);
         Application.LoadLevel("mainmenu");
       }
     }
@@ -73,15 +75,24 @@ public class GameplayManager : MonoBehaviour {
     trainSound.Stop();
     hudManager.timerController.StopTimer();
     ExplosionSoundObject.GetComponent<AudioSource>().Play();
-    LeanTween.value(gameObject, severity => overspeedSeverity = severity, overspeedSeverity, 0f, 1f)
-      .setDelay(2f);
-    LeanTween.value(Camera.main.gameObject, val => Camera.main.orthographicSize = val, Camera.main.orthographicSize, 500f, 2f)
-      .setEase(LeanTweenType.easeInOutExpo)
-      .setDelay(2f);
-    LeanTween.delayedCall(2f, () => isGameOver = true);
-    LeanTween.delayedCall(10f, () => {
-      Application.LoadLevel("mainmenu");
+
+    // Wait 'til after explosion's had a chance to animate.
+    LeanTween.delayedCall(2f, () => {
+      isGameOver = true;
+      // Remove red vision (overspeed severity).
+      LeanTween.value(gameObject, severity => overspeedSeverity = severity,
+        overspeedSeverity, 0f, 1f);
+      // Zoom out to reveal map.
+      var cam = Camera.main;
+      LeanTween.value(gameObject, val => cam.orthographicSize = val,
+        cam.orthographicSize, 500f, 2f)
+        .setEase(LeanTweenType.easeInOutExpo);
+      // Load main menu.
+      LeanTween.delayedCall(8f, () => {
+        Application.LoadLevel("mainmenu");
+      });
     });
+
   }
 
   public void SetOverspeed(float severity) {

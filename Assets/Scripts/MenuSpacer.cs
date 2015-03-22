@@ -12,7 +12,7 @@ public class MenuSpacer : MonoBehaviour {
       var menu = Menus[i];
       menu.transform.position = new Vector3(Screen.width * i * 1.5f,
         menu.transform.position.y, menu.transform.position.z);
-      Debug.Log(menu.transform.position);
+      // Debug.Log(menu.transform.position);
     }
   }
 
