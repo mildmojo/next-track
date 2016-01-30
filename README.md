@@ -8,4 +8,4 @@ When using a gamepad, swirl the left stick in a circular motion to crank your sp
 
 [Play online!](http://antitoxin.itch.io/next-track)
 
-Or download for [Linux](releases/next-track-linux.zip), [Mac]((releases/next-track-osx.zip), or [Windows](releases/next-track-win32.zip).
+Or download for [Linux](https://github.com/mildmojo/next-track/blob/master/releases/next-track-linux.zip?raw=true), [Mac](https://github.com/mildmojo/next-track/blob/master/releases/next-track-osx.zip?raw=true), or [Windows](https://github.com/mildmojo/next-track/blob/master/releases/next-track-win32.zip?raw=true).
